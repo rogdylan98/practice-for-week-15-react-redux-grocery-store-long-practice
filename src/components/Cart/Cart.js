@@ -32,7 +32,7 @@ function Cart() {
   return (
     <div className="cart">
       <ul>
-        {cartItems.map(item => <CartItem key={item.id} item={item}/>)}
+        {cartItems.map(item => <CartItem key={item.id} item={item} />)}
       </ul>
       <hr />
       <form onSubmit={onSubmit}>

@@ -7,10 +7,20 @@ export const addToCart = (id) => {
         id
     }
 }
-export default function cartReducer(state = {}, action){
-    switch(action.type){
+
+const REMOVE = 'cart/REMOVE'
+
+export const removeFromCart = (id) => {
+    return {
+        type: REMOVE,
+        id
+    }
+}
+
+export default function cartReducer(state = {}, action) {
+    let newState = { ...state };
+    switch (action.type) {
         case ADD:
-            const newState = {...state};
             if (newState[action.id]) {
                 newState[action.id].count++;
             } else {
@@ -20,6 +30,10 @@ export default function cartReducer(state = {}, action){
                 }
             }
             return newState;
+        case REMOVE:
+            if (newState[action.id]) delete newState[action.id];
+            return newState;
+        // If it returns just the original state, does that avoid a re-render?
         default:
             return state;
     }
