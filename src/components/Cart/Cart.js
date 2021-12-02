@@ -2,21 +2,12 @@ import CartItem from './CartItem';
 import './Cart.css';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { purchaseCart } from '../../Store/cart';
+import { getProduceInCart, purchaseCart } from '../../Store/cart';
 
 function Cart() {
   const dispatch = useDispatch();
 
-  const cart = useSelector(state => state.cart);
-  const produce = useSelector(state => state.produce);
-
-  const cartItems = Object.values(cart)
-    .map(item => {
-      return {
-        ...item,
-        ...produce[item.id]
-      };
-    });
+  const cartItems = useSelector(getProduceInCart);
 
   if (!cartItems || !cartItems.length) return (
     <div className="cart">

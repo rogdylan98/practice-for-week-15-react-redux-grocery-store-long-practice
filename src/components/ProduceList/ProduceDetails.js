@@ -2,7 +2,7 @@ import { addToCart } from '../../Store/cart';
 import { likeUnlike } from '../../Store/produce';
 import { useDispatch } from 'react-redux';
 
-function ProduceDetails({ produce }) {
+function ProduceDetails({ produce, showCart }) {
   const cartItem = {};
   const dispatch = useDispatch()
   return (
@@ -17,7 +17,10 @@ function ProduceDetails({ produce }) {
         </button>
         <button
           className={"plus-button" + (cartItem ? " selected" : "")}
-          onClick={() => dispatch(addToCart(produce.id))}
+          onClick={() => {
+              showCart(true);
+              return dispatch(addToCart(produce.id))
+            }}
         >
           <i className="fas fa-plus" />
         </button>

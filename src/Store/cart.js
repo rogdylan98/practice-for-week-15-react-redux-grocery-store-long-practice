@@ -34,7 +34,17 @@ export const purchaseCart = () => {
     }
 }
 
-export default function cartReducer(state = {}, action) {
+export function getProduceInCart(state) {
+    const order = state.cart.order;
+    return order.map(id => {
+        return {
+            ...state.cart[id],
+            ...state.produce[id]
+        }
+    })
+
+}
+export default function cartReducer(state = {order:[]}, action) {
     let newState = { ...state };
     switch (action.type) {
         case ADD:
@@ -45,16 +55,26 @@ export default function cartReducer(state = {}, action) {
                     id: action.id,
                     count: 1
                 }
+                newState.order.push(action.id);
             }
             return newState;
         case REMOVE:
-            if (newState[action.id]) delete newState[action.id];
+            if (newState[action.id]) {
+                delete newState[action.id];
+                newState.order = newState.order.filter(el => {
+                    return el !== action.id;
+                })
+            }
+
             return newState;
         case UPDATE:
             if (action.operation === 'inc') newState[action.id].count++;
             if (action.operation === 'dec') {
                 if (newState[action.id].count === 1) {
-                    delete newState[action.id]
+                    delete newState[action.id];
+                    newState.order = newState.order.filter(el => {
+                        return el !== action.id;
+                    })
                 } else {
                     newState[action.id].count--;
                 }

@@ -20,6 +20,8 @@ export const likeUnlike = (id) => {
     }
 }
 
+export const getAllProduce = (state) => Object.values(state.produce);
+
 export default function produceReducer(state = {}, action) {
     console.log('PRODUCE REDUCER')
     switch (action.type) {
