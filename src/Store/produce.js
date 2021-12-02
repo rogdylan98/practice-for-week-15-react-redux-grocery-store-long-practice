@@ -4,10 +4,19 @@ const POPULATE = 'produce/POPULATE';
 
 // This is the action creator that returns the action
 export const populateProduce = () => {
-    console.log('ACTION')
+    // console.log('ACTION')
     return {
         type: POPULATE,
         produce: produceData
+    }
+}
+
+const LIKE_UNLIKE = '/produce/LIKE_UNLIKE'
+
+export const likeUnlike = (id) => {
+    return {
+        type: LIKE_UNLIKE,
+        id
     }
 }
 
@@ -20,6 +29,11 @@ export default function produceReducer(state = {}, action) {
                 newState[el.id] = el;
             })
             return newState;
+        case LIKE_UNLIKE:
+            const likeState = { ...state };
+            // console.log(likeState);
+            likeState[action.id].liked = !likeState[action.id].liked;
+            return likeState;
         default:
             return state;
     }

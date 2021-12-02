@@ -26,6 +26,14 @@ export const updateCart = (id, operation) => {
     }
 }
 
+const PURCHASE = 'cart/PURCHASE';
+
+export const purchaseCart = () => {
+    return {
+        type: PURCHASE
+    }
+}
+
 export default function cartReducer(state = {}, action) {
     let newState = { ...state };
     switch (action.type) {
@@ -52,6 +60,8 @@ export default function cartReducer(state = {}, action) {
                 }
             }
             return newState;
+        case PURCHASE:
+            return {};
         // If it returns just the original state, does that avoid a re-render?
         default:
             return state;
